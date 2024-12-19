@@ -1,4 +1,6 @@
 let first_spin = true
+let first_click = true
+let phase = 1
 
 // надписи и цвета на секторах
 const prizes = [
@@ -77,6 +79,10 @@ let prizeNodes;
 const createPrizeNodes = () => {
   // обрабатываем каждую подпись
   prizes.forEach(({ text, color, reaction }, i) => {
+    
+    if (phase == 1) {
+      text = Math.floor((Math.random() * 9) + 3)
+    }
     // каждой из них назначаем свой угол поворота
     const rotation = ((prizeSlice * i) * -1) - prizeOffset;
     // добавляем код с размещением текста на страницу в конец блока spinner
@@ -89,6 +95,18 @@ const createPrizeNodes = () => {
     );
   });
 };
+
+const changePrizesNodes = () => {
+  for (let i=0; i < prizeNodes.length; i++){
+    // prizeNodes[i].textContent = prizes[i].text
+    prizeNodes[i].textContent = ""
+  }
+}
+
+const clearOldWheel = () => {
+  prizes_in_page = document.querySelectorAll(".prize")
+  prizes_in_page.forEach(element => element.remove());
+}
 
 // рисуем разноцветные секторы
 const createConicGradient = () => {
@@ -106,6 +124,7 @@ const createConicGradient = () => {
   );
 };
 
+
 // создаём функцию, которая нарисует колесо в сборе
 const setupWheel = () => {
   // сначала секторы
@@ -120,11 +139,10 @@ const setupWheel = () => {
 const spinertia = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
-  console.log(first_spin)
 
-  if (first_spin) {
-    first_spin = !first_spin
+  if (phase == 2) {
     console.log(first_spin)
+    phase = 3
     return Math.floor(2 * (max - min + 1)) + min;
   }
   else{
@@ -167,21 +185,31 @@ const selectPrize = () => {
 
 // отслеживаем нажатие на кнопку
 trigger.addEventListener("click", () => {
-  // делаем её недоступной для нажатия
-  trigger.disabled = true;
-  // задаём начальное вращение колеса
-  rotation = Math.floor(2 * 360 + spinertia(400, 838.5));
-  // rotation = Math.floor(Math.random() * 360 + spinertia(400, 800));
-  // убираем прошлый приз
-  prizeNodes.forEach((prize) => prize.classList.remove(selectedClass));
-  // добавляем колесу класс is-spinning, с помощью которого реализуем нужную отрисовку
-  wheel.classList.add(spinClass);
-  // через CSS говорим секторам, как им повернуться
-  spinner.style.setProperty("--rotate", rotation);
-  // возвращаем язычок в горизонтальную позицию
-  ticker.style.animation = "none";
-  // запускаем анимацию вращение
-  runTickerAnimation();
+  if (!first_click){
+    clearOldWheel()
+    setupWheel()
+    trigger.textContent = "Испытай удачу"
+    first_click = true
+  }
+  else{
+    // делаем её недоступной для нажатия
+    trigger.disabled = true;
+    // задаём начальное вращение колеса
+    rotation = Math.floor(2 * 360 + spinertia(400, 838.5));
+    // rotation = Math.floor(Math.random() * 360 + spinertia(400, 800));
+    // убираем прошлый приз
+    prizeNodes.forEach((prize) => prize.classList.remove(selectedClass));
+    // добавляем колесу класс is-spinning, с помощью которого реализуем нужную отрисовку
+    wheel.classList.add(spinClass);
+    // через CSS говорим секторам, как им повернуться
+    spinner.style.setProperty("--rotate", rotation);
+    // возвращаем язычок в горизонтальную позицию
+    ticker.style.animation = "none";
+    first_click = false
+    // запускаем анимацию вращение
+    runTickerAnimation();
+    phase = 2
+  };
 });
 
 // отслеживаем, когда закончилась анимация вращения колеса
@@ -198,6 +226,7 @@ spinner.addEventListener("transitionend", () => {
   spinner.style.setProperty("--rotate", rotation);
   // делаем кнопку снова активной
   trigger.disabled = false;
+  trigger.textContent = "Продолжить"
 });
 
 // подготавливаем всё к первому запуску
