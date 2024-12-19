@@ -37,7 +37,7 @@ body {
     "spinner"
     "trigger";
   /* устанавливаем размер шрифта */
-  font-size: calc(var(--size) / 21);
+  font-size: calc(var(--size) / 24);
 }
 
 /* всё, что относится ко внутренним элементам главного блока, будет находиться в области сетки с названием spinner */
@@ -81,7 +81,7 @@ body {
   display: flex;
   align-items: center;
   /* задаём отступы от краёв блока */
-  padding: 0 calc(var(--size) / 6) 0 calc(var(--size) / 20);
+  padding: 0 calc(var(--size) / 6) 0 calc(var(--size) / 15);
   /* устанавливаем размеры */
   width: 50%;
   height: 50%;
