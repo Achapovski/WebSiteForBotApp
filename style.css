@@ -29,7 +29,7 @@ body {
   position: relative;
   /* подключаем сетку */
   display: grid;
-  grid-gap: calc(var(--size) / 18);
+  grid-gap: calc(var(--size) / 20);
   /* выравниваем содержимое блока по центру */
   align-items: center;
   /* задаём имена областей внутри сетки */
@@ -37,7 +37,7 @@ body {
     "spinner"
     "trigger";
   /* устанавливаем размер шрифта */
-  font-size: calc(var(--size) / 24);
+  font-size: calc(var(--size) / 20);
 }
 
 /* всё, что относится ко внутренним элементам главного блока, будет находиться в области сетки с названием spinner */
@@ -81,9 +81,9 @@ body {
   display: flex;
   align-items: center;
   /* задаём отступы от краёв блока */
-  padding: 0 calc(var(--size) / 6) 0 calc(var(--size) / 15);
+  padding: 1 calc(var(--size) / 25) 0 calc(var(--size) / 22);
   /* устанавливаем размеры */
-  width: 50%;
+  width: 43%;
   height: 50%;
   /* устанавливаем координаты, относительно которых будем вращать текст */
   transform-origin: center right;
