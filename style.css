@@ -29,7 +29,7 @@ body {
   position: relative;
   /* подключаем сетку */
   display: grid;
-  grid-gap: calc(var(--size) / 20);
+  grid-gap: calc(var(--size) / 18);
   /* выравниваем содержимое блока по центру */
   align-items: center;
   /* задаём имена областей внутри сетки */
